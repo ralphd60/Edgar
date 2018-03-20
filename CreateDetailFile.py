@@ -1,14 +1,13 @@
 import csv
-from bs4 import BeautifulSoup
 
-def detail_file(soup, filename):
+def detail_file(soup, filename, count):
 
     # this section will be for single tags
     issuer_cik = soup.find('issuerCik').get_text()
     issuer_name = soup.find('issuerName').get_text()
     issuer_symbol = soup.find('issuerTradingSymbol').get_text()
     form_type = soup.find('transactionFormType').get_text()
-    officer_title = soup.find('officerTitle').get_text()
+    # officer_title = soup.find('officerTitle').get_text()
 
 
     # this section will be for tags that have the "Value" tag with the results
@@ -26,15 +25,27 @@ def detail_file(soup, filename):
         transaction_date = transaction_date_soup.find('value').get_text()
         security_title_soup = soup.find('securityTitle')
         security_title = security_title_soup.find('value').get_text()
+        sharesOwnedFollowingTransaction_soup= soup.find('sharesOwnedFollowingTransaction')
+        sharesOwnedFollowingTransaction = sharesOwnedFollowingTransaction_soup.find('value').get_text()
+
     except Exception as e:
         print("type error: " + str(e) + ": " + filename)
 
     # by using with statement close() file is not necessary
     try:
+
         with open('c:\\temp\\form4.csv', 'a', newline='') as csvfile:
+
             writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_MINIMAL)
-            writer.writerow([transaction_date, issuer_cik, issuer_name, issuer_symbol, form_type,disposal_code, shares, price_per_share, direct_or_indirect_ownership, officer_title, security_title])
+            if count == 0:
+                writer.writerow(["transaction_date", "issuer_cik", "issuer_name", "issuer_symbol",
+                                 "form_type", "disposal_code", "shares", "price_per_share", "direct_or_indirect_ownership",
+                                 "security_title", "sharesOwnedFollowingTransaction"])
+
+            writer.writerow([transaction_date, issuer_cik, issuer_name, issuer_symbol,
+                             form_type,disposal_code, shares, price_per_share, direct_or_indirect_ownership,
+                             security_title, sharesOwnedFollowingTransaction])
     except Exception as e:
         print("type error: " + str(e) + ": " + filename)
 

@@ -2,6 +2,8 @@ from GetData import *
 from FormFile import *
 import pandas as pd
 import numpy as np
+from bs4 import BeautifulSoup
+
 url = 'https://www.sec.gov/Archives/edgar/daily-index/2018/QTR1/'
 url_detail_file = 'https://www.sec.gov/Archives/'
 # import matplotlib.pyplot as plt
@@ -24,9 +26,10 @@ def edgar_data(cik, form):
                                        ignore_index=True)
             else:
                 df_cik = df.loc[np.logical_and(df['CIK'] == cik, df['Form Type'] == form)]
-
+    count = 0
     for filename in df_cik['File Name']:
         print(filename)
-        get_details(url_detail_file, filename)
+        get_details(url_detail_file, filename,count)
+        count = count + 1
 
-edgar_data(1168696, '4')
+edgar_data(1506307, '4')
