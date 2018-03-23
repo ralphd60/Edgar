@@ -16,7 +16,6 @@ def get_file_list(url):
     # find all files in the directory using the tag <a>
     links = soup.find_all('a')
 
-    # filter the link sending with .gz
     file_list = [link['href'] for link in links if link['href'].endswith('idx')]
 
     return file_list
