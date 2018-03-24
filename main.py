@@ -5,7 +5,7 @@ import numpy as np
 # import matplotlib.pyplot as plt
 
 
-def edgar_data(cik, form, year):
+def edgar_data(ciklist, form, year):
     """This function is the main function.  Calls functions to created the list
     containing the file name with the meta data of the actually location of the detail file"""
 
@@ -21,18 +21,19 @@ def edgar_data(cik, form, year):
     # df = pd.read_csv\
     #    ('C:\\Users\\ralphd60\\Downloads\\master.20180116.idx',sep='|',parse_dates=True,skiprows = 7,header=None)
 
-    # initializing this dataframe as empty
-    # it is used to only once to start the dataframe
-    # after it is initially populated, we use the append method
+    # initializing this dataframe as empty it is used to only once to create the dataframe
+    # after it is initially populated, we use the append method the for loop below retrieves the list
+    # of daily-index files it then filters out just the 'master file"
     df_cik = None
+
     for link in url:
         master_file_list = get_file_list(link)
         for xfile in master_file_list:
-            # loops through the list to extract out the "master" file
+            # loops through the list to extract out relevant files based on the paramneters
             # master file is indexed by the cik code
-            if xfile.startswith('master'):
-                print(xfile)
+            for cik in ciklist:
                 try:
+                    print(xfile)
                     df = pd.read_csv(link + xfile, sep='|', parse_dates=True, skiprows=7, header=None)
                     df.columns = ['CIK', 'Company Name', 'Form Type', 'Date Filed', 'File Name']
 
@@ -52,4 +53,4 @@ def edgar_data(cik, form, year):
         count = count + 1
 
 
-edgar_data(1506307, '4', ['2016', '2017'])
+edgar_data([1506307, 1248617], '4', ['2018'])

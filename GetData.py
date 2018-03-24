@@ -16,4 +16,5 @@ def get_file_list(url):
     # find all files in the directory using the tag <a>
     links = soup.find_all('a')
     file_list = [link['href'] for link in links if link['href'].endswith('idx')]
+    file_list  = [x for x in file_list if x.startswith('master')]
     return file_list
