@@ -31,19 +31,18 @@ def edgar_data(ciklist, form, year):
         for xfile in master_file_list:
             # loops through the list to extract out relevant files based on the paramneters
             # master file is indexed by the cik code
-            for cik in ciklist:
-                try:
-                    print(xfile)
-                    df = pd.read_csv(link + xfile, sep='|', parse_dates=True, skiprows=7, header=None)
-                    df.columns = ['CIK', 'Company Name', 'Form Type', 'Date Filed', 'File Name']
-
+            print(xfile)
+            try:
+                df = pd.read_csv(link + xfile, sep='|', parse_dates=True, skiprows=7, header=None)
+                df.columns = ['CIK', 'Company Name', 'Form Type', 'Date Filed', 'File Name']
+                for cik in ciklist:
                     if df_cik is not None:
                         df_cik = df_cik.append(df.loc[np.logical_and(df['CIK'] == cik, df['Form Type'] == form)],
                                                ignore_index=True)
                     else:
                         df_cik = df.loc[np.logical_and(df['CIK'] == cik, df['Form Type'] == form)]
-                except Exception as e:
-                    print("type error: " + str(e) + ": " + xfile)
+            except Exception as e:
+                print("type error: " + str(e) + ": " + xfile)
     # count this is intialized here.  It is only used really once to see if a header is needed
     # when writing out the  the final results to a file
     count = 0
@@ -53,4 +52,4 @@ def edgar_data(ciklist, form, year):
         count = count + 1
 
 
-edgar_data([1506307, 1248617], '4', ['2018'])
+edgar_data([702165], '4', ['2018'])

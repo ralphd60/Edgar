@@ -17,6 +17,5 @@ def get_details(url, filename, count):
 
     dfile(soup,filename, count)
 
-
 # used to test
-# get_details('https://www.sec.gov/Archives/','edgar/data/1506307/0001584746-18-000006.txt')
+# get_details('https://www.sec.gov/Archives/','edgar/data/702165/0001225208-18-006528.txt', 1)
