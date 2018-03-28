@@ -15,7 +15,8 @@ def get_details(url, filename, count):
     # create beautiful-soup object
     soup = BeautifulSoup(r.content, "xml")
 
-    dfile(soup,filename, count)
-
+    count = dfile(soup, filename, count)
+    return count
 # used to test
-# get_details('https://www.sec.gov/Archives/','edgar/data/702165/0001225208-18-006528.txt', 1)
+# get_details('https://www.sec.gov/Archives/','edgar/data/702165/0001225208-18-006528.txt', 0)
+# get_details('https://www.sec.gov/Archives/','edgar/data/702165/0001225208-18-000220.txt',0)

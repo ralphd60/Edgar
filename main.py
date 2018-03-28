@@ -48,8 +48,8 @@ def edgar_data(ciklist, form, year):
     count = 0
     for filename in df_cik['File Name']:
         print(filename)
-        get_details(url_detail_file, filename, count)
-        count = count + 1
+        count1 = get_details(url_detail_file, filename, count)
+        count = count1
 
 
-edgar_data([702165], '4', ['2018'])
+edgar_data([1000275, 100625, 1248617, 702165], '4', ['2017', '2018'])
