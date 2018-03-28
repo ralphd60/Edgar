@@ -5,7 +5,7 @@ def detail_file(soup, filename, count):
     issuer_cik = soup.find('issuerCik').get_text()
     issuer_name = soup.find('issuerName').get_text()
     issuer_symbol = soup.find('issuerTradingSymbol').get_text()
-    form_type = soup.find('transactionFormType').get_text()
+    form_type = soup.find('documentType').get_text()
     # isDirector = soup.find('isDirector').get_text()
     # isOfficer = soup.find('isOfficer').get_text()
     footnotes = soup.find_all('footnote')
