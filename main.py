@@ -52,4 +52,8 @@ def edgar_data(ciklist, form, year):
         count = count1
 
 
-edgar_data([70858, 1506307, 1130310, 1368265], '4', ['2017', '2018'])
+edgar_data([1506307], '4', ['2017','2018'])
+# 70858 bac
+# 1506307 kmi
+# 1130310  cnp
+# 1368265 clne

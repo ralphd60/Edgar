@@ -9,6 +9,7 @@ def detail_file(soup, filename, count):
     # isDirector = soup.find('isDirector').get_text()
     # isOfficer = soup.find('isOfficer').get_text()
     footnotes = soup.find_all('footnote')
+    owner_signature_date = soup.find('signatureDate').get_text()
     is_director = "NA"
     is_officer = "NA"
     nonderivative_tags = soup.find_all('nonDerivativeTransaction')
@@ -63,13 +64,13 @@ def detail_file(soup, filename, count):
                 writer = csv.writer(csvfile, delimiter=',',
                                     quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 if count == 0:
-                    writer.writerow(["transaction_date", "issuer_cik", "issuer_name", "issuer_symbol",
+                    writer.writerow(["transaction_date","signature_date", "issuer_cik", "issuer_name", "issuer_symbol",
                                      "form_type", "disposal_code", "shares", "price_per_share",
                                      "direct_or_indirect_ownership",
                                      "security_title", "sharesOwnedFollowingTransaction", "Director",
                                      "Officer", "Footnotes", "Filename"])
                     count = count + 1
-                writer.writerow([transaction_date, issuer_cik, issuer_name, issuer_symbol,
+                writer.writerow([transaction_date, owner_signature_date, issuer_cik, issuer_name, issuer_symbol,
                                  form_type,disposal_code, shares, price_per_share, direct_or_indirect_ownership,
                                  security_title, shares_owned_following_transaction,is_director,
                                  is_officer, footnotes, filename])
