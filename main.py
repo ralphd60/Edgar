@@ -52,7 +52,13 @@ def edgar_data(ciklist, form, year):
         count = count1
 
 
-edgar_data([1506307], '4', ['2017','2018'])
+if __name__ == '__main__':
+    cik_code = []
+    n = int(input('How many CIKs do you want to enter? '))
+    for i in range(n):
+        cik_code.append(int((input('CIK code - '))))
+        print(cik_code)
+    edgar_data(cik_code, '4', ['2016', '2017', '2018'])
 # 70858 bac
 # 1506307 kmi
 # 1130310  cnp
