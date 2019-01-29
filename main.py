@@ -2,8 +2,11 @@ from GetData import *
 from FormFile import *
 import pandas as pd
 import numpy as np
+import logging
 # import matplotlib.pyplot as plt
 
+logging.basicConfig(filename='edgar.log', filemode='w', format='%(asctime)s %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def edgar_data(ciklist, form, year):
     """This function is the main function.  Calls functions to created the list
@@ -31,7 +34,7 @@ def edgar_data(ciklist, form, year):
         for xfile in master_file_list:
             # loops through the list to extract out relevant files based on the paramneters
             # master file is indexed by the cik code
-            print(xfile)
+            logging.info(xfile)
             try:
                 df = pd.read_csv(link + xfile, sep='|', parse_dates=True, skiprows=7, header=None)
                 df.columns = ['CIK', 'Company Name', 'Form Type', 'Date Filed', 'File Name']
@@ -42,24 +45,30 @@ def edgar_data(ciklist, form, year):
                     else:
                         df_cik = df.loc[np.logical_and(df['CIK'] == cik, df['Form Type'] == form)]
             except Exception as e:
-                print("type error: " + str(e) + ": " + xfile)
+                logging.info("type error: " + str(e) + ": " + xfile)
     # count this is intialized here.  It is only used really once to see if a header is needed
     # when writing out the  the final results to a file
     count = 0
     for filename in df_cik['File Name']:
-        print(filename)
+        logging.info('Pulling out files for CIK - ' + filename)
         count1 = get_details(url_detail_file, filename, count)
         count = count1
 
 
 if __name__ == '__main__':
     cik_code = []
-    n = int(input('How many CIKs do you want to enter? '))
+    n = int(input('How many CIKs do you want to ent1er? '))
     for i in range(n):
         cik_code.append(int((input('CIK code - '))))
-        print(cik_code)
-    edgar_data(cik_code, '4', ['2016', '2017', '2018'])
+        logging.info(cik_code)
+    # edgar_data(cik_code, '4', ['2016', '2017', '2018'])
+    edgar_data(cik_code, '4', ['2019'])
 # 70858 bac
 # 1506307 kmi
 # 1130310  cnp
 # 1368265 clne
+# 1093691 plug
+# 1047862 ed (con ed)
+# 1101239 eqix (equinix - data center)
+# 37996 Ford
+# 40545 GE
