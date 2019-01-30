@@ -3,6 +3,8 @@ from FormFile import *
 import pandas as pd
 import numpy as np
 import logging
+import sys
+
 # import matplotlib.pyplot as plt
 
 logging.basicConfig(filename='edgar.log', filemode='w', format='%(asctime)s %(message)s', level=logging.INFO)
@@ -57,12 +59,19 @@ def edgar_data(ciklist, form, year):
 
 if __name__ == '__main__':
     cik_code = []
-    n = int(input('How many CIKs do you want to ent1er? '))
-    for i in range(n):
-        cik_code.append(int((input('CIK code - '))))
+    # for manual input
+    # n = int(input('How many CIKs do you want to ent1er? '))
+    # for i in range(n):
+    #     cik_code.append(int((input('CIK code - '))))
+    #     logging.info(cik_code)
+    n = len(sys.argv)
+
+    for i in range(1,n):
+        cik_code.append(int(sys.argv[i]))
         logging.info(cik_code)
-    # edgar_data(cik_code, '4', ['2016', '2017', '2018'])
-    edgar_data(cik_code, '4', ['2019'])
+    edgar_data(cik_code, '4', ['2017', '2018', '2019'])
+    # edgar_data(cik_code, '4', ['2019'])
+
 # 70858 bac
 # 1506307 kmi
 # 1130310  cnp
